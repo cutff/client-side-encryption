@@ -5,8 +5,8 @@
 <body>
 <div style="margin-left:30px">
 <?php
-//URL to targeted 
 
+//URL and credentials to target
 $url = "https://pal-test.adyen.com/pal/adapter/httppost";
 $username = "ws@Company.YourCompany";
 $password = "verys3cret";
