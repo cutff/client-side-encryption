@@ -44,7 +44,7 @@
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_3"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_4"></script>
         <script>
         // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -66,14 +66,20 @@
             var options = {};
             
             // Enable basic field validation (default is true)
+            // The submit button will be disabled when fields
+            // proof to be invalid. The form submission will be
+            // prevented as well.
             // options.enableValidations = true,
             
+            // Always have the submit button enabled (default is false)
             // Leave the submit button enabled, even in case 
-            // of validation errors (default is false)
+            // of validation errors.
             // options.submitButtonAlwaysEnabled = false,
             
-            // Ignore non numerics for the card number field when
-            // validating (default is true)
+            // Ignore non-numeric characters in the card number field (default is true)
+            // The payment handling ignores non-numeric characters for the card field.
+            // By default non-numeric characters will also be ignored while validating
+            // the card number field. This can be disabled for UX reasons.
             // options.numberIgnoreNonNumeric = true,
             
             // the form will be encrypted before it is submitted
