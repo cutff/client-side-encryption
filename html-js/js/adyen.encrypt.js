@@ -7,7 +7,7 @@
  * * Stanford Javascript Crypto Library | http://crypto.stanford.edu/sjcl/
  * * JSON in JavaScript | http://www.JSON.org/
  * 
- * Version: 0_1_4
+ * Version: 0_1_4p1
  * Author:  ADYEN (c) 2014
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_4"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_4p1"></script>
         <script>
         // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -182,7 +182,7 @@
         }
     }
 
-    encrypt.version = '0_1_4';
+    encrypt.version = '0_1_4p1';
 
     /*
      * Compatibility JavaScript older than 1.8.5 (IE8, IE7)
@@ -274,7 +274,6 @@
                 removeClass(node, 'valid-' + type);
                 removeClass(node, 'invalid-' + type);
             }
-            document.title = node.className;
             cse.toggleSubmit();
         };
     };

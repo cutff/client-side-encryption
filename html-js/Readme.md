@@ -2,9 +2,9 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
-JavaScript version 1.0.4
+JavaScript version 0_1_4
 ---
- The 1.0.4 version of the JavaScript client-side encryption offers a LuhnCheck and default validations on other fields.
+ The 0_1_4 version of the JavaScript client-side encryption offers a LuhnCheck and default validations on other fields.
 
  All properties are configurable through the options object:
 
@@ -34,3 +34,9 @@ JavaScript version 1.0.4
  ```javascript
   options.numberIgnoreNonNumeric = true;
  ```
+
+ Patches
+ 
+ * 0_1_4p1
+ 
+     Remove unnecessary ```document.title``` assignment.
