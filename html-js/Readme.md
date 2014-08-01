@@ -2,6 +2,12 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_5
+---
+
+The 0_1_5 version of the JavaScript client-side encryption library upgrades the random number generator and the JSBN implementation.
+ 
+
 JavaScript version 0_1_4
 ---
  The 0_1_4 version of the JavaScript client-side encryption offers a LuhnCheck and default validations on other fields.
