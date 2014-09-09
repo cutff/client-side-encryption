@@ -52,6 +52,7 @@
     static NSDateFormatter* instance;
     dispatch_once(&once, ^{
         instance = [[NSDateFormatter alloc] init];
+        instance.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         instance.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
         instance.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     });
