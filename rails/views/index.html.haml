@@ -1,0 +1,66 @@
+
+/ This file is a Rails/HAML translation of the raw HTML file that can be found in the same repository : 
+/ https://github.com/adyenpayments/client-side-encryption/blob/master/html-js/adyen.encrypt.simple.html
+
+= form_tag payment_path, id: 'adyen-encrypted-form' do
+
+  %label= "Card number"
+  / Do NOT add names for card information related form elements 
+  / Do not forget to also remove params['adyen-encrypted-data'] from you production logs 
+  = text_field_tag nil, '4111111111111111', class: 'form-control', maxlength: 16, id: 'adyen-encrypted-form-number',  data: {'encrypted-name' => "number"}
+
+  %label= "Expiration date"
+  %select.form-control{id: 'adyen-encrypted-form-expiry-month', data: {'encrypted-name' => "expiryMonth"}}
+    %option{value: '08'}= "08"
+
+  %select.form-control{id: 'adyen-encrypted-form-expiry-year', data: {'encrypted-name' => "expiryYear"}}
+    %option{value: '2018'}= "2018"
+
+  %label= "CVC"
+  = text_field_tag nil, '737', class: 'form-control', maxlength: 3, id: 'adyen-encrypted-form-cvc',  data: {'encrypted-name' => "cvc"}
+
+  %label= "Card holder"
+  = text_field_tag nil, 'Barillot', class: 'form-control', id: 'adyen-encrypted-form-holder-name', data: {'encrypted-name' => "holderName"}
+
+  %input{type: 'hidden', id: 'adyen-encrypted-form-expiry-generationtime', value: "#{Time.now.utc.iso8601}", data: {'encrypted-name' => "generationtime"}}
+  = submit_tag 'RESERVER', class: 'btn btn-primary'
+
+/ Should *not* be loaded in the document head. Be careful using the asset pipeline here.
+= javascript_include_tag '/javascripts/adyen.encrypt.min.js?0_1_5'
+
+:javascript
+  // the form element to encrypt
+  var form    = document.getElementById('adyen-encrypted-form');
+
+  // the public key
+  var key  =  "10001|C288AC784493195A90BD52EDAD5CBD8D1DC0211D786476359A52A7"
+              + "A5C8E6D73081493A27D2DCC1DD1D0304EDC682C04979AE6CDAB516D597D7"
+              + "CFFF4F1662AA159F4F3828628A878255D65565C9A3F2889F0FD777BB155B"
+              + "06C532421996E2B46D44A5A835E7F9EA9A2B9CD5D449BBE37EB916C96F1D"
+              + "9A714526A0BBF1AC2D6F4E9E7B7679205A74E16BEF7557D84C5B58292B95"
+              + "B9B3B8DC319E1DCFF2A080180DBAD70DC4DB2B1B9283B8E40B1B4959E57E"
+              + "94AC58C6FDEA78FF38CDA28746A829A9123CA1C0214A744CFCD9552DE920"
+              + "5379348942C1D8B683A28C1AA449C6E4264D0A428242064AB9CAA2590B59"
+              + "AEDABA9D1AA95C4457A9B03885A99D5C306CAD"; 
+
+  var options = {};
+
+  // Enable basic field validation (default is true)
+  // The submit button will be disabled when fields
+  // proof to be invalid. The form submission will be
+  // prevented as well.
+  options.enableValidations = true,
+
+  // Always have the submit button enabled (default is false)
+  // Leave the submit button enabled, even in case 
+  // of validation errors.
+  options.submitButtonAlwaysEnabled = false,
+
+  // Ignore non-numeric characters in the card number field (default is true)
+  // The payment handling ignores non-numeric characters for the card field.
+  // By default non-numeric characters will also be ignored while validating
+  // the card number field. This can be disabled for UX reasons.
+  options.numberIgnoreNonNumeric = true
+
+  // the form will be encrypted before it is submitted
+  adyen.encrypt.createEncryptedForm( form, key, options);
