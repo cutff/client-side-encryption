@@ -12,9 +12,8 @@ A few notes
 
 You will need to install HTTParty to perform the API request :
 
-    ```
     gem 'httparty'
-    ```
+    
 Then bundle install, as usual.
 
 
