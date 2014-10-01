@@ -7,7 +7,7 @@
  * * Stanford Javascript Crypto Library | http://crypto.stanford.edu/sjcl/
  * * JSON in JavaScript | http://www.JSON.org/
  * 
- * Version: 0_1_5
+ * Version: 0_1_6
  * Author:  ADYEN (c) 2014
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_5"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_6"></script>
         <script>
         // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -118,7 +118,7 @@
     function Arcfour(){this.i=0;this.j=0;this.S=new Array}function ARC4init(c){var a,d,b;for(a=0;a<256;++a){this.S[a]=a}d=0;for(a=0;a<256;++a){d=d+this.S[a]+c[a%c.length]&255;b=this.S[a];this.S[a]=this.S[d];this.S[d]=b}this.i=0;this.j=0}function ARC4next(){var a;this.i=this.i+1&255;this.j=this.j+this.S[this.i]&255;a=this.S[this.i];this.S[this.i]=this.S[this.j];this.S[this.j]=a;return this.S[a+this.S[this.i]&255]}function prng_newstate(){return new Arcfour}Arcfour.prototype.init=ARC4init;Arcfour.prototype.next=ARC4next;var rng_psize=256;/* */
 
     /* rng.js */
-    var rng_state;var rng_pool;var rng_pptr;function rng_seed_int(a){rng_pool[rng_pptr++]^=a&255;rng_pool[rng_pptr++]^=(a>>8)&255;rng_pool[rng_pptr++]^=(a>>16)&255;rng_pool[rng_pptr++]^=(a>>24)&255;if(rng_pptr>=rng_psize){rng_pptr-=rng_psize}}function rng_seed_time(){rng_seed_int(new Date().getTime())}if(rng_pool==null){rng_pool=new Array();rng_pptr=0;var t;if(window.crypto&&window.crypto.getRandomValues){var ua=new Uint8Array(32);window.crypto.getRandomValues(ua);for(t=0;t<32;++t){rng_pool[rng_pptr++]=ua[t]}}else{if(window.msCrypto&&window.msCrypto.getRandomValues){var ua=new Uint8Array(32);window.msCrypto.getRandomValues(ua);for(t=0;t<32;++t){rng_pool[rng_pptr++]=ua[t]}}else{if(window.crypto&&window.crypto.random){var z=window.crypto.random(32);for(t=0;t<z.length;++t){rng_pool[rng_pptr++]=z.charCodeAt(t)&255}}}}while(rng_pptr<rng_psize){t=Math.floor(65536*Math.random());rng_pool[rng_pptr++]=t>>>8;rng_pool[rng_pptr++]=t&255}rng_pptr=0;rng_seed_time()}function rng_get_byte(){if(rng_state==null){rng_seed_time();rng_state=prng_newstate();rng_state.init(rng_pool);for(rng_pptr=0;rng_pptr<rng_pool.length;++rng_pptr){rng_pool[rng_pptr]=0}rng_pptr=0}return rng_state.next()}function rng_get_bytes(b){var a;for(a=0;a<b.length;++a){b[a]=rng_get_byte()}}function SecureRandom(){}SecureRandom.prototype.nextBytes=rng_get_bytes;/* */
+    var rng_state;var rng_pool;var rng_pptr;function rng_seed_int(a){rng_pool[rng_pptr++]^=a&255;rng_pool[rng_pptr++]^=(a>>8)&255;rng_pool[rng_pptr++]^=(a>>16)&255;rng_pool[rng_pptr++]^=(a>>24)&255;if(rng_pptr>=rng_psize){rng_pptr-=rng_psize}}function rng_seed_time(){rng_seed_int(new Date().getTime())}if(rng_pool==null){rng_pool=[];rng_pptr=0;var t;try{if(window.crypto&&window.crypto.getRandomValues){var ua=new Uint8Array(32);window.crypto.getRandomValues(ua);for(t=0;t<32;++t){rng_pool[rng_pptr++]=ua[t]}}else{if(window.msCrypto&&window.msCrypto.getRandomValues){var ua=new Uint8Array(32);window.msCrypto.getRandomValues(ua);for(t=0;t<32;++t){rng_pool[rng_pptr++]=ua[t]}}else{if(window.crypto&&window.crypto.random){var z=window.crypto.random(32);for(t=0;t<z.length;++t){rng_pool[rng_pptr++]=z.charCodeAt(t)&255}}}}}catch(e){}while(rng_pptr<rng_psize){t=Math.floor(65536*Math.random());rng_pool[rng_pptr++]=t>>>8;rng_pool[rng_pptr++]=t&255}rng_pptr=0;rng_seed_time()}function rng_get_byte(){if(rng_state==null){rng_seed_time();rng_state=prng_newstate();rng_state.init(rng_pool);for(rng_pptr=0;rng_pptr<rng_pool.length;++rng_pptr){rng_pool[rng_pptr]=0}rng_pptr=0}return rng_state.next()}function rng_get_bytes(b){var a;for(a=0;a<b.length;++a){b[a]=rng_get_byte()}}function SecureRandom(){}SecureRandom.prototype.nextBytes=rng_get_bytes;/* */
 
     /* rsa.js */
     function parseBigInt(b,a){return new BigInteger(b,a)}function pkcs1pad2(c,g){if(g<c.length+11){alert("Message too long for RSA");return null}var f=new Array();var e=c.length-1;while(e>=0&&g>0){f[--g]=c[e--]}f[--g]=0;var d=new SecureRandom();var a=new Array();while(g>2){a[0]=0;while(a[0]==0){d.nextBytes(a)}f[--g]=a[0]}f[--g]=2;f[--g]=0;return new BigInteger(f)}function RSAKey(){this.n=null;this.e=0;this.d=null;this.p=null;this.q=null;this.dmp1=null;this.dmq1=null;this.coeff=null}function RSASetPublic(b,a){if(b!=null&&a!=null&&b.length>0&&a.length>0){this.n=parseBigInt(b,16);this.e=parseInt(a,16)}else{alert("Invalid RSA public key")}}function RSADoPublic(a){return a.modPowInt(this.e,this.n)}function RSAEncrypt(b){var a=pkcs1pad2(b,(this.n.bitLength()+7)>>3);if(a==null){return null}var e=this.doPublic(a);if(e==null){return null}var d=e.toString(16);if((d.length&1)==0){return d}else{return"0"+d}}function RSAEncryptB64(a){var b=this.encrypt(a);if(b){return hex2b64(b)}else{return null}}RSAKey.prototype.doPublic=RSADoPublic;RSAKey.prototype.setPublic=RSASetPublic;RSAKey.prototype.encrypt=RSAEncrypt;RSAKey.prototype.encrypt_b64=RSAEncryptB64;/* */
@@ -182,7 +182,7 @@
         }
     }
 
-    encrypt.version = '0_1_5';
+    encrypt.version = '0_1_6';
 
     /*
      * Compatibility JavaScript older than 1.8.5 (IE8, IE7)
