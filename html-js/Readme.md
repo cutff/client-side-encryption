@@ -2,6 +2,11 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_6
+---
+
+The 0_1_6 version of the JavaScript client-side encryption library fixes an issue in older Firefox where the native random number generator throws a not implemented exception.
+
 JavaScript version 0_1_5
 ---
 
