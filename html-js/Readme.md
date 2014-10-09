@@ -2,10 +2,17 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_7
+---
+
+The 0_1_7 version of the JavaScript client-side encryption library fixes entropy collection issues by adding polyfills for UInt32Array and Date.toISOString in Internet Explorer 8.
+
 JavaScript version 0_1_6
 ---
 
-The 0_1_6 version of the JavaScript client-side encryption library fixes an issue in older Firefox where the native random number generator throws a not implemented exception.
+The 0_1_6 version of the JavaScript client-side encryption library fixes an issue where the library crashes if the native browsers random number initialization fails.
+
+The issue typically occurs in Firefox version lower than 20 where crypto.random is present but throws a NS_ERROR_NOT_IMPLEMENTED when being called.
 
 JavaScript version 0_1_5
 ---
