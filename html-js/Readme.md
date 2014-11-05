@@ -2,6 +2,11 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_8
+---
+
+The 0_1_8 version of the JavaScript client-side encryption library upgrades the underlying SJCL crypto library and fixes a base64 encoding issue.
+
 JavaScript version 0_1_7
 ---
 
