@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9579E703-B2D7-4954-B190-DFA2E22F19E9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AdyenClientsideEncryptionDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>12B28FBE1D75A88A1613BF2C042EE35BAEE9590A</key>
+		<string>github.com:adyenpayments/client-side-encryption.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/AdyenClientsideEncryptionNew/AdyenClientsideEncryptionDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>12B28FBE1D75A88A1613BF2C042EE35BAEE9590A</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:adyenpayments/client-side-encryption.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>12B28FBE1D75A88A1613BF2C042EE35BAEE9590A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>12B28FBE1D75A88A1613BF2C042EE35BAEE9590A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>client-side-encryption</string>
+		</dict>
+	</array>
+</dict>
+</plist>
