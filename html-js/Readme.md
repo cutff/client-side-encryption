@@ -2,6 +2,15 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_9
+---
+
+* Fix variable leaking to window object and remove unused variable
+
+* Fix unneeded change to XMLHttpRequest object
+
+* Add Cart Type Detection addon
+
 JavaScript version 0_1_8
 ---
 

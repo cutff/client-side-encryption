@@ -3,48 +3,51 @@
   <head>
     <title>Example Payment Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/cse-example-form.css" type="text/css" />
   </head>
   <body>
         <form method="POST" action="#handler" id="adyen-encrypted-form">
             <fieldset>
                 <legend>Card Details</legend>
                 <div class="field">
-                    <label for="adyen-encrypted-form-number">Card Number
+                    <label for="adyen-encrypted-form-number">
+                        <span>Card Number</span>
                         <input type="text" id="adyen-encrypted-form-number" value="5555444433331111" size="20" autocomplete="off" data-encrypted-name="number" />
                     </label>
+                    <span id="cardType"></span>
                 </div>
 
                 <div class="field">
-                    <label for="adyen-encrypted-form-holder-name">Card Holder Name
-                        <input type="text" id="adyen-encrypted-form-holder-name" value="John Doe" size="20" autocomplete="off" data-encrypted-name="holderName" />
-                    </label>
-                </div>
-
-                <div class="field">
-                    <label for="adyen-encrypted-form-cvc">CVC
+                    <label for="adyen-encrypted-form-cvc">
+                        <span>CVC</span>
                         <input type="text" id="adyen-encrypted-form-cvc" value="737" size="4" maxlength="4" autocomplete="off" data-encrypted-name="cvc" />
                     </label>
                 </div>
-
+                
                 <div class="field">
-                    <label for="adyen-encrypted-form-expiry-month">Expiration Month (MM)
+                    <label for="adyen-encrypted-form-holder-name">
+                        <span>Card Holder Name</span>
+                        <input type="text" id="adyen-encrypted-form-holder-name" value="John Doe" size="20" autocomplete="off" data-encrypted-name="holderName" />
+                    </label>
+                </div>
+                
+                <div class="field">
+                    <label for="adyen-encrypted-form-expiry-month">
+                        <span>Expiration (MM/YYYY)</span>
                         <input type="text" value="06"   id="adyen-encrypted-form-expiry-month" maxlength="2" size="2" autocomplete="off" data-encrypted-name="expiryMonth" /> / 
                     </label>
-                    <label for="adyen-encrypted-form-expiry-year">Expiration Year (YYYY)
-                        <input type="text" value="2016" id="adyen-encrypted-form-expiry-year" maxlength="4" size="4" autocomplete="off" data-encrypted-name="expiryYear" />
-                    </label>
+                    <!-- Do not use two input elements inside a single label. This will cause focus issues on the seoncd and latter fields using the mouse in various browsers -->
+                    <input type="text" value="2016" id="adyen-encrypted-form-expiry-year" maxlength="4" size="4" autocomplete="off" data-encrypted-name="expiryYear" />
                 </div>
 
-                <div class="field">
-                    <input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="generate-this-server-side" data-encrypted-name="generationtime" />
-                    <input type="submit" value="Submit" />
-                </div>
+                <input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="generate-this-server-side" data-encrypted-name="generationtime" />
+                <input type="submit" value="Submit" />
             </fieldset>
         </form>
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_8"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_9"></script>
         <script>
             // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -81,6 +84,9 @@
             // By default non-numeric characters will also be ignored while validating
             // the card number field. This can be disabled for UX reasons.
             // options.numberIgnoreNonNumeric = true,
+            
+            // Set a element that should display the card type
+            options.cardTypeElement = document.getElementById('cardType');
             
             // the form will be encrypted before it is submitted
             adyen.encrypt.createEncryptedForm( form, key, options);
