@@ -47,7 +47,7 @@
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_9"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_10"></script>
         <script>
             // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -84,6 +84,10 @@
             // By default non-numeric characters will also be ignored while validating
             // the card number field. This can be disabled for UX reasons.
             // options.numberIgnoreNonNumeric = true,
+            
+            // Use a different attribute to identify adyen fields
+            // Note that the attributes needs to start with data-.
+            // options.fieldNameAttribute = 'data-encrypted-name';
             
             // Set a element that should display the card type
             options.cardTypeElement = document.getElementById('cardType');

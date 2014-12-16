@@ -7,7 +7,7 @@
  * * Stanford Javascript Crypto Library | http://crypto.stanford.edu/sjcl/
  * * JSON in JavaScript | http://www.JSON.org/
  * 
- * Version: 0_1_9
+ * Version: 0_1_10
  * Author:  ADYEN (c) 2014
 
 <!DOCTYPE html>
@@ -59,7 +59,7 @@
 
         <!-- How to use the Adyen encryption client-side JS library -->
         <!-- N.B. Make sure the library is *NOT* loaded in the "head" of the HTML document -->
-        <script src="js/adyen.encrypt.min.js?0_1_9"></script>
+        <script src="js/adyen.encrypt.min.js?0_1_10"></script>
         <script>
             // generate time client side for testing only... Don't deploy on a real integration!!!
             document.getElementById('adyen-encrypted-form-expiry-generationtime').value = new Date().toISOString();
@@ -96,6 +96,10 @@
             // By default non-numeric characters will also be ignored while validating
             // the card number field. This can be disabled for UX reasons.
             // options.numberIgnoreNonNumeric = true,
+            
+            // Use a different attribute to identify adyen fields
+            // Note that the attributes needs to start with data-.
+            // options.fieldNameAttribute = 'data-encrypted-name';
             
             // Set a element that should display the card type
             options.cardTypeElement = document.getElementById('cardType');
@@ -195,7 +199,7 @@
         }
     }
 
-    encrypt.version = '0_1_9';
+    encrypt.version = '0_1_10';
 
     /*
      * Compatibility JavaScript older than 1.8.5 (IE8, IE7)
@@ -344,6 +348,8 @@
      * 
      */
 
+    var DEFAULT_FIELDNAME_ATTRIBUTE = "data-encrypted-name";
+    
     var EncryptedForm = /* encrypt.EncryptedForm = */function ( element, key, options ) {
 
         try {
@@ -377,8 +383,14 @@
         if ( typeof options.numberIgnoreNonNumeric === "undefined" ) {
             options.numberIgnoreNonNumeric = true;
         }
+        
+        // Validate the custom data field name
+        if ( typeof options.fieldNameAttribute !== 'string' || !options.fieldNameAttribute.match(/^data(-\w+)+$/i)) {
+            options.fieldNameAttribute = DEFAULT_FIELDNAME_ATTRIBUTE;
+        }
 
         this.name = options.name || 'adyen-encrypted-data';
+        this.fieldNameAttribute = options.fieldNameAttribute || DEFAULT_FIELDNAME_ATTRIBUTE;
         this.onsubmit = options.onsubmit || function () {
         };
 
@@ -499,9 +511,9 @@
          */
 
         getEncryptedFields : function ( node, fields ) {
-
+            
             if ( node.querySelectorAll ) {
-                return node.querySelectorAll( '[data-encrypted-name]' );
+                return node.querySelectorAll( '[' + this.fieldNameAttribute + ']' );
             }
 
             fields = fields || [];
@@ -512,7 +524,7 @@
             for ( var i = 0; i < children.length; i++ ) {
                 child = children[ i ];
 
-                if ( this.hasAttribute( child, 'data-encrypted-name' ) ) {
+                if ( this.hasAttribute( child, this.fieldNameAttribute ) ) {
                     fields.push( child );
                 } else {
                     this.getEncryptedFields( child, fields );
@@ -535,17 +547,14 @@
 
         toJSON : function ( fields ) {
 
-            var field;
-
-            var data = {};
-            var key, value;
+            var field, data = {}, key, value;
 
             for ( var i = fields.length - 1; i >= 0; i-- ) {
 
                 field = fields[ i ];
 
                 field.removeAttribute( 'name' );
-                key = field.getAttribute( 'data-encrypted-name' );
+                key = field.getAttribute( this.fieldNameAttribute );
                 value = field.value;
                 
                 // Cater for select boxes
@@ -619,25 +628,25 @@
                 element = elements[ c ];
                 if ( !element || !element.getAttribute ) {
                     continue;
-                } else if ( element.getAttribute( 'data-encrypted-name' ) === 'number' ) {
+                } else if ( element.getAttribute( this.fieldNameAttribute ) === 'number' ) {
                     handlers.luhnHandler = handlers.luhnHandler || validations.createChangeHandler( cse, 'luhn', true );
                     addEvent( element, 'change', handlers.luhnHandler, false );
                     handlers.luhnHandler( {
                         target : element
                     } );
-                } else if ( element.getAttribute( 'data-encrypted-name' ) === 'cvc' ) {
+                } else if ( element.getAttribute( this.fieldNameAttribute ) === 'cvc' ) {
                     handlers.cvcHandler = handlers.cvcHandler || validations.createChangeHandler( cse, 'cvc', true );
                     addEvent( element, 'change', handlers.cvcHandler, false );
                     handlers.cvcHandler( {
                         target : element
                     } );
-                } else if ( element.getAttribute( 'data-encrypted-name' ) === 'expiryYear' ) {
+                } else if ( element.getAttribute( this.fieldNameAttribute ) === 'expiryYear' ) {
                     handlers.expiryYearHandler = handlers.expiryYearHandler || validations.createChangeHandler( cse, 'year', true );
                     addEvent( element, 'change', handlers.expiryYearHandler, false );
                     handlers.expiryYearHandler( {
                         target : element
                     } );
-                } else if ( element.getAttribute( 'data-encrypted-name' ) === 'expiryMonth' ) {
+                } else if ( element.getAttribute( this.fieldNameAttribute ) === 'expiryMonth' ) {
                     handlers.expiryMonthHandler = handlers.expiryMonthHandler || validations.createChangeHandler( cse, 'month', true );
                     addEvent( element, 'change', handlers.expiryMonthHandler, false );
                     handlers.expiryMonthHandler( {
@@ -661,7 +670,7 @@
                 element = elements[ c ];
                 if ( !element || !element.getAttribute ) {
                     continue;
-                } else if ( element.getAttribute( 'data-encrypted-name' ) === 'number' ) {
+                } else if ( element.getAttribute( this.fieldNameAttribute ) === 'number' ) {
                     addEvent( element, 'change', updateCardTypeDetection, false );
                     addEvent( element, 'input', updateCardTypeDetection, false );
                     addEvent( element, 'keyup', updateCardTypeDetection, false );

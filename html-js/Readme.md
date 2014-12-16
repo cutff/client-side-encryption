@@ -2,6 +2,11 @@ client-side-encryption
 ==========
 Sample code for client-side encryption
 
+JavaScript version 0_1_10
+---
+
+* For integrating CSE better within other platforms (like magento) an option is added to change the attribute name that define the encryption fields from 'data-encrypted-name' to another data-* field.
+
 JavaScript version 0_1_9
 ---
 
