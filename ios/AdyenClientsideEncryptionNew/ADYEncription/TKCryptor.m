@@ -110,6 +110,10 @@ static NSUInteger crypt_ivLength = 12;
     NSMutableData *digest = [NSMutableData dataWithCapacity:CC_SHA1_DIGEST_LENGTH];
     NSData *stringBytes = [stringInHex dataUsingEncoding:NSUTF8StringEncoding];
     if (CC_SHA1(stringBytes.bytes, (CC_LONG)stringBytes.length, digest.mutableBytes)) {
+        if (digest.length == 0) {
+            // fallback if SHA1 failed
+            return stringBytes;
+        }
         return digest;
     }
     return nil;
