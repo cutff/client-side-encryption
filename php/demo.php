@@ -21,14 +21,14 @@ curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, 1);
 
-$data = array(
+
 $data = array(
     'action' => 'Payment.authorise',
     'paymentRequest.amount.currency' => 'EUR',
     'paymentRequest.amount.value' => '1000',
     'paymentRequest.merchantAccount' => 'YourMerchantAccount',
     'paymentRequest.reference' => 'Example Order 1',
-    'paymentRequest.additionalData.card.encrypted.json' => $carddata,
+    'paymentRequest.additionalData.card.encrypted.json' => $carddata
 );
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
