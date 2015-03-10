@@ -5,3 +5,4 @@ Sample code for client-side encryption
 
 ## Note:
 - iOS repository moved to https://github.com/Adyen/CSE-iOS
+- JavaScript repository moved to https://github.com/Adyen/CSE-JS
